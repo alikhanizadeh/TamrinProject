@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <EditText
+        android:id="@+id/Edittext_Api"
+        android:textDirection="rtl"
+        android:textSize="22sp"
+        android:hint="نام شهر را وارد کنید"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btn_Api"
+        android:textDirection="rtl"
+        android:textSize="22sp"
+        android:text="show"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        tools:ignore="ExtraText" />
+
+    <FrameLayout
+        android:layout_marginTop="15dp"
+        android:padding="5dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_gravity="end"
+            android:textSize="20sp"
+            android:text="وظعیت هوا"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:id="@+id/txtCondition_Api"
+            android:layout_gravity="start"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"/>
+
+
+
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_marginTop="15dp"
+        android:padding="5dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_gravity="end"
+            android:textSize="20sp"
+            android:text="رطوبت هوا"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:id="@+id/txtWet_Api"
+            android:layout_gravity="start"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"/>
+
+
+
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_marginTop="15dp"
+        android:padding="5dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_gravity="end"
+            android:textSize="20sp"
+            android:text="سرعت باد"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:id="@+id/txtSpeed_Api"
+            android:layout_gravity="start"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"/>
+
+
+
+
+    </FrameLayout>
+
+
+
+
+
+</LinearLayout>
