@@ -8,7 +8,7 @@ class ApiClient {
 
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("http://192.168.56.1/txt.json")
+            .baseUrl("http://192.168.56.1/")
             .build()
     }
 

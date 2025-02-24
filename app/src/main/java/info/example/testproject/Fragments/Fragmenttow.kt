@@ -24,22 +24,22 @@ class fragmenttow : Fragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmenttowBinding.inflate(layoutInflater)
-        return inflater.inflate(R.layout.fragmenttow, container, false)
+        binding = FragmenttowBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        db = NotedatabaseHelper(this)
-        notesAdapter = NotesAdapter(db.getAllNotes(), this)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        db = NotedatabaseHelper(requireContext())
+        notesAdapter = NotesAdapter(db.getAllNotes(),this )
         binding.notesRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.notesRecyclerView.adapter = notesAdapter
 
         binding.addButton.setOnClickListener{
-            val intent = Intent(context, fragmenttow2::class.java)
+            val intent = Intent(context, F_towActivity::class.java)
             startActivity(intent)
         }
+
     }
     override fun onResume() {
         super.onResume()

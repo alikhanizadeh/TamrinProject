@@ -20,7 +20,7 @@ class AdapterRetrofit(private val list: List<Users>):BaseAdapter() {
     @SuppressLint("InflateParams")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view:View
-        val holder : info.example.testproject.adapters.ViewHolder
+        val holder : ViewHolder
         if (convertView == null){
             view = LayoutInflater.from(parent.context).inflate(R.layout.itemlist_in_retrofit,null)
             holder = ViewHolder()
@@ -30,7 +30,7 @@ class AdapterRetrofit(private val list: List<Users>):BaseAdapter() {
             view.tag = holder
 
         }else{
-            holder = convertView.tag as info.example.testproject.adapters.ViewHolder
+            holder = convertView.tag as ViewHolder
             view = convertView
         }
         val date  = getItem(position)

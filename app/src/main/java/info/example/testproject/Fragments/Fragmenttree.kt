@@ -21,8 +21,8 @@ class Fragmenttree :Fragment() , RetrofitService.OnUsersJsonRecieved {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmenttreeBinding.inflate(layoutInflater)
-        return inflater.inflate(R.layout.fragmenttree,container,false)
+        binding = FragmenttreeBinding.inflate(inflater, container, false)
+        return binding.root
 
     }
 

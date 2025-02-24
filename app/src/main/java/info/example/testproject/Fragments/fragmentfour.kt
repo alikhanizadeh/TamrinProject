@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import info.example.testproject.R
 import info.example.testproject.databinding.FragmentfourBinding
+import info.example.testproject.databinding.FragmentoneBinding
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -25,13 +26,14 @@ class fragmentfour() :Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentfourBinding.inflate(layoutInflater)
-        return inflater.inflate(R.layout.fragmentfour,container,false)
+        binding = FragmentfourBinding.inflate(inflater, container, false)
+        return binding.root
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.btnApi.setOnClickListener{
 
             if (binding.EdittextApi.text.toString() == ""){
@@ -52,6 +54,7 @@ class fragmentfour() :Fragment() {
     @SuppressLint("StaticFieldLeak")
     inner class MyAsyncTask:AsyncTask<String,String,String>(){
 
+        @Deprecated("Deprecated in Java")
         override fun doInBackground(vararg p0: String?): String {
             val url = URL(p0[0])
             val connection = url.openConnection() as HttpURLConnection
@@ -61,14 +64,15 @@ class fragmentfour() :Fragment() {
             return ""
         }
 
+        @SuppressLint("SetTextI18n")
+        @Deprecated("Deprecated in Java")
         override fun onProgressUpdate(vararg values: String?) {
             super.onProgressUpdate(*values)
-            val jsonObject = JSONObject(values[0])
+            val jsonObject = JSONObject(values[0].toString())
             val weather = jsonObject.getJSONArray("weather")
             val wind = jsonObject.getJSONObject("wind")
             val main = jsonObject.getJSONObject("main")
             val array = weather.getJSONObject(0)
-
 
 
             val desc = array.getString("description")

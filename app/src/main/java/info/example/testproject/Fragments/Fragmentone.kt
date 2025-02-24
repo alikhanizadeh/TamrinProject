@@ -1,6 +1,5 @@
 package info.example.testproject.Fragments
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -13,35 +12,36 @@ import info.example.testproject.R
 import info.example.testproject.databinding.FragmentoneBinding
 
 class fragmentone :Fragment() {
-    private lateinit var binding : FragmentoneBinding
-    lateinit var pref :SharedPreferences
+    private lateinit var binding: FragmentoneBinding
+    lateinit var pref : SharedPreferences
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentoneBinding.inflate(layoutInflater)
-        return inflater.inflate(R.layout.fragmentone, container, false)
+        binding = FragmentoneBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    @SuppressLint("UseRequireInsteadOfGet")
-    @Deprecated("Deprecated in Java")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        pref = activity!!.getSharedPreferences("setting", Context.MODE_PRIVATE)
+        pref = requireActivity().getSharedPreferences("setting", Context.MODE_PRIVATE)
 
         val Setting = pref.getString("setting", "متنی وجود ندارد")
 
-        Toast.makeText(activity, "$Setting", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "$Setting", Toast.LENGTH_SHORT).show()
+
         binding.buttonFOne.setOnClickListener{
             val editor = pref.edit()
             editor.putString("setting","متن ذخیره شده")
             editor.apply()
-            Toast.makeText(activity, "تغییرات با موفقیت ثبت شد", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "داده ذخیره شد", Toast.LENGTH_SHORT).show()
         }
 
     }
+
 
 }

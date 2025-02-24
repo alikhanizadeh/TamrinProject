@@ -19,15 +19,14 @@ class fragmenttow2:Fragment(){
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = Fragmenttow2Binding.inflate(layoutInflater)
-        return inflater.inflate(R.layout.fragmenttow, container, false)
+    ): View {
+        binding = Fragmenttow2Binding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        db = NotedatabaseHelper(this)
+        db = NotedatabaseHelper(requireContext())
         binding.savaButton.setOnClickListener{
             val title = binding.titleEditText.text.toString()
             val content = binding.contentEditText.text.toString()
