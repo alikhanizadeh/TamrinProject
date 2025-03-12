@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+
 import info.example.testproject.Fragments.Fragmenttree
 import info.example.testproject.Fragments.fragmentfour
 import info.example.testproject.Fragments.fragmentone
@@ -31,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         val btnFragmenttow = findViewById<Button>(R.id.btnFragmenttow)
         val btnFragmenttree = findViewById<Button>(R.id.btnFragmenttree)
         val btnFragmentfour = findViewById<Button>(R.id.btnFragmentfour)
+        val btnFragmentfive = findViewById<Button>(R.id.btnFragmentfive)
+
 
         btnFragmentone.setOnClickListener{
             replaceFragment(fragmentone())
@@ -45,9 +48,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnFragmentfour.setOnClickListener{
-
             replaceFragment(fragmentfour())
         }
+
+        //btnFragmentfive.setOnClickListener{
+            //val intent = Intent(this,MainActivity::class.java)
+            //startActivity(intent)
+        //}
 
 
 

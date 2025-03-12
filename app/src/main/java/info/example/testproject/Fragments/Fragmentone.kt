@@ -35,8 +35,14 @@ class fragmentone :Fragment() {
         Toast.makeText(requireContext(), "$Setting", Toast.LENGTH_SHORT).show()
 
         binding.buttonFOne.setOnClickListener{
+            val text = binding.EditTextFOne.text.toString().trim()
+
+            if (text.isEmpty()){
+                binding.buttonFOne.error = "لطفاً یک متن وارد کنید!"
+            }
+
             val editor = pref.edit()
-            editor.putString("setting","متن ذخیره شده")
+            editor.putString("setting",text)
             editor.apply()
             Toast.makeText(requireContext(), "داده ذخیره شد", Toast.LENGTH_SHORT).show()
         }

@@ -5,8 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import info.example.testproject.Dataclass.Note
-import info.example.testproject.Fragments.fragmenttow
-import info.example.testproject.Fragments.fragmenttow2
+
 
 class NotedatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {

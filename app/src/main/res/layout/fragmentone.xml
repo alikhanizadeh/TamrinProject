@@ -4,20 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     android:background="@color/white">
 
 
+    <EditText
+        android:id="@+id/EditText_f_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="متن خود را وارد کنید"
+        android:padding="12dp"
+        android:background="@drawable/custom_edittext"
+        android:textAlignment="textStart"
+        android:textColor="#333"
+        android:textColorHint="#888"
+        android:layout_marginHorizontal="20dp" />
+
+
+
     <Button
-        android:id="@+id/button_f_one"
-        android:layout_marginTop="300dp"
-        android:text="کلیک کنید"
-        android:textSize="20sp"
-        android:background="@color/black"
-        android:textColor="@color/white"
-        android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:id="@+id/button_f_one"
+        android:text="@string/click"
+        android:textSize="20sp"
+        android:textColor="#0D0000"
+        android:textStyle="bold"
+        android:backgroundTint="#BBDEFB"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        />
 
 
 </LinearLayout>

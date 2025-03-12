@@ -10,6 +10,7 @@
         android:id="@+id/Edittext_Api"
         android:textDirection="rtl"
         android:textSize="22sp"
+        android:textColorHint="@color/black"
         android:hint="نام شهر را وارد کنید"
         android:layout_width="300dp"
         android:layout_height="wrap_content"/>
@@ -19,6 +20,7 @@
         android:textDirection="rtl"
         android:textSize="22sp"
         android:text="show"
+        android:backgroundTint="#2196F3"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         tools:ignore="ExtraText" />
@@ -42,6 +44,7 @@
             android:id="@+id/txtCondition_Api"
             android:layout_gravity="start"
             android:textSize="20sp"
+            android:text=""
             android:textColor="@color/black"
             android:layout_width="150dp"
             android:layout_height="wrap_content"/>

@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import info.example.testproject.adapters.NotedatabaseHelper
 import info.example.testproject.adapters.NotesAdapter
-import info.example.testproject.R
 import info.example.testproject.databinding.FragmenttowBinding
 
 class fragmenttow : Fragment(){

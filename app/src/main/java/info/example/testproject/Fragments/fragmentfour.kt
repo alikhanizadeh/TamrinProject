@@ -1,112 +1,105 @@
 package info.example.testproject.Fragments
 
-import android.annotation.SuppressLint
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import info.example.testproject.R
+import androidx.lifecycle.lifecycleScope
+import com.google.gson.Gson
 import info.example.testproject.databinding.FragmentfourBinding
-import info.example.testproject.databinding.FragmentoneBinding
-import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.lang.StringBuilder
-import java.net.HttpURLConnection
-import java.net.URL
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import java.io.IOException
 
-class fragmentfour() :Fragment() {
-    lateinit var binding: FragmentfourBinding
+
+class fragmentfour : Fragment() {
+
+    private lateinit var binding: FragmentfourBinding
+    private val apiKey = "08bfd544cb06c8124fd1ae7ecd75f93b"
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentfourBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnApi.setOnClickListener{
-
-            if (binding.EdittextApi.text.toString() == ""){
+        binding.btnApi.setOnClickListener {
+            val cityName = binding.EdittextApi.text.toString().trim()
+            if (cityName.isEmpty()) {
                 Toast.makeText(context, "لطفا نام شهر رو وارد کنید", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            getData(binding.EdittextApi.text.toString())
-
+            // استفاده از Coroutine به جای AsyncTask
+            lifecycleScope.launch {
+                fetchWeatherData(cityName)
+            }
         }
     }
 
-    private fun getData(cityName : String) {
+    // تابعی که اطلاعات آب و هوا رو میگیره
+    private suspend fun fetchWeatherData(cityName: String) {
+        val api = "https://api.openweathermap.org/data/2.5/weather?q=$cityName&appid=$apiKey&lang=fa&units=metric"
 
-        val api = "https://api.openweathermap.org/data/2.5/weather?q=$cityName&apikey=08bfd544cb06c8124fd1ae7ecd75f93b"
-        MyAsyncTask().execute(api)
-    }
-    @SuppressLint("StaticFieldLeak")
-    inner class MyAsyncTask:AsyncTask<String,String,String>(){
+        withContext(Dispatchers.IO) {
+            try {
+                val client = OkHttpClient()
+                val request = Request.Builder().url(api).build()
+                client.newCall(request).execute().use { response ->
+                    if (!response.isSuccessful) throw IOException("خطا در برقراری ارتباط: ${response.code}")
 
-        @Deprecated("Deprecated in Java")
-        override fun doInBackground(vararg p0: String?): String {
-            val url = URL(p0[0])
-            val connection = url.openConnection() as HttpURLConnection
-            connection.connectTimeout = 10000
-            val json = converStreamToString(connection.inputStream)
-            publishProgress(json)
-            return ""
+                    val responseBody = response.body?.string() ?: throw IOException("داده‌ای دریافت نشد")
+                    parseWeatherData(responseBody)
+                }
+
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "خطا در ارتباط با سرور!", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
-
-        @SuppressLint("SetTextI18n")
-        @Deprecated("Deprecated in Java")
-        override fun onProgressUpdate(vararg values: String?) {
-            super.onProgressUpdate(*values)
-            val jsonObject = JSONObject(values[0].toString())
-            val weather = jsonObject.getJSONArray("weather")
-            val wind = jsonObject.getJSONObject("wind")
-            val main = jsonObject.getJSONObject("main")
-            val array = weather.getJSONObject(0)
-
-
-            val desc = array.getString("description")
-            val humidity = main.getInt("humidity")
-            val speed = wind.getBoolean("speed")
-
-            binding.txtConditionApi.text = desc
-            binding.txtWetApi.text = humidity.toString()
-            binding.txtSpeedApi.text = speed.toString()
-
-
-
-
-        }
-
-
-
     }
 
-    private fun converStreamToString(stream :InputStream) : String{
-        val bufferReader = BufferedReader(InputStreamReader(stream))
-        var line:String
-        val sb = StringBuilder()
+    // تابعی که داده‌های JSON رو تجزیه می‌کنه
+    private suspend fun parseWeatherData(json: String) {
+        withContext(Dispatchers.Main) {
+            try {
+                val gson = Gson()
+                val weatherResponse = gson.fromJson(json, WeatherResponse::class.java)
 
-        try {
-            do {
-                line = bufferReader.readLine()
-                sb.append(line)
-            }while (true)
-        }catch (ex : Exception){
-            ex.printStackTrace()
+                val desc = weatherResponse.weather[0].description
+                val humidity = weatherResponse.main.humidity
+                val speed = weatherResponse.wind.speed
+
+                binding.txtConditionApi.text = desc
+                binding.txtWetApi.text = humidity.toString()
+                binding.txtSpeedApi.text = speed.toString()
+
+            } catch (e: Exception) {
+                Toast.makeText(context, "خطا در تجزیه داده‌ها!", Toast.LENGTH_SHORT).show()
+            }
         }
-        return  sb.toString()
     }
 
+    // مدل داده‌ای برای پارس JSON
+    data class WeatherResponse(
+        val weather: List<Weather>,
+        val main: Main,
+        val wind: Wind
+    )
 
+    data class Weather(val description: String)
+    data class Main(val humidity: Int)
+    data class Wind(val speed: Float)
 }
